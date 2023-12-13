@@ -46,10 +46,11 @@ int mandelbrotEscapeIterations(double real, double imag, int maxIter) {
     double zReal = 0.0;
     double zImag = 0.0;
     unsigned int iter = 0;
-
+	double zRealNew;
+	double zImagNew;
     while (iter < maxIter) {
-        double zRealNew = zReal * zReal - zImag * zImag + real;
-        double zImagNew = 2 * zReal * zImag + imag;
+        zRealNew = zReal * zReal - zImag * zImag + real;
+        zImagNew = 2 * zReal * zImag + imag;
         zReal = zRealNew;
         zImag = zImagNew;
         // Check if the magnitude of the complex number exceeds 2 (escape radius)
@@ -61,6 +62,7 @@ int mandelbrotEscapeIterations(double real, double imag, int maxIter) {
 
     return iter;
 }
+
 
 double x_pixel(int x, double x_min, double x_step)
 {
@@ -81,9 +83,9 @@ void zoom(float zoom, t_set *set, int x, int y)
 	set->x_step = set->x_step * zoom;
 	set->y_step = set->y_step * zoom;
 	set->y_max = irreal + y * set->y_step; 
-	set->y_min = irreal - (1000 - y) * set->y_step; 
+	set->y_min = irreal - (1000 - y) * set->y_step;  // change 1000 for high
 	set->x_min = real - x * set->x_step; 
-	set->x_max = real +  (1000 - x) * set->x_step; 
+	set->x_max = real +  (1000 - x) * set->x_step; // change 1000 for width
 }
 
 void draw_screen(t_args *args, t_set *set, t_data *img)
