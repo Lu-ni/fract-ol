@@ -36,7 +36,7 @@ int	close(int keycode, t_vars *vars)
 	}
 	else 
 	{
-		printf("ola\n");
+		printf("%p\n", vars);
 	}
 	return (0);
 }
@@ -78,12 +78,6 @@ void zoom(float zoom, t_set *set)
 	set->x_step = set->x_step * zoom;
 	set->y_step = set->y_step * zoom;
 }
-int	mouse_hook(int keycode, t_vars *vars)
-{
-	if (keycode == MOUSE_WHEEL_DOWN)
-		printf("o\n");
-	return (0);
-}
 void draw_screen(t_args *args, t_set *set, t_data *img)
 {
 
@@ -100,19 +94,35 @@ void draw_screen(t_args *args, t_set *set, t_data *img)
 			real = x_pixel(i_x, set->x_min, set->x_step);
 			irreal = y_pixel(i_y, set->y_max, set->x_step);
 			red = mandelbrotEscapeIterations(real, irreal, 255) & 0xFF;
-			my_mlx_pixel_put(img, i_x, i_y, argb(0, red,0,0));
+			my_mlx_pixel_put(img, i_x, i_y, argb(0, (433 - red * 20)%255, (red * 20) % 255, (2455 - red * 20)%255));
 			//printf("(%f ; %f) - (%i ; %i)\n",real, irreal,i_x,i_y);
 			i_x++;
 		}
 		i_y++;
 	}
 }
+int	mouse_hook(int keycode,int x, int y, t_zoom *zoom_data)
+{
+	if (keycode == MOUSE_WHEEL_DOWN)
+	{
+		zoom(0.9, zoom_data->set);
+		draw_screen(zoom_data->args, zoom_data->set, zoom_data->img);
+		mlx_put_image_to_window(zoom_data->vars->mlx, zoom_data->vars->win, zoom_data->img->img, 0, 0);
+	}
+	return (0);
+}
 int	main(void)
 {
+	t_zoom zoom_data;
 	t_vars  vars;
 	t_data	img;
 	t_set set;
 	t_args args;
+
+	zoom_data.args = &args;
+	zoom_data.img = &img;
+	zoom_data.set = &set;
+	zoom_data.vars = &vars;
 
 	args.high = 1000;
 	args.width = 1000;
@@ -122,6 +132,7 @@ int	main(void)
 	set.x_min = -2.0;
 	set.x_step = (set.x_max - set.x_min) / (args.width - 1.0);
 	set.y_step = (set.y_max - set.y_min) / (args.high - 1.0);
+	printf("%f\n",zoom_data.set->x_max);
 
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, args.high, args.width, "Hello world!");
@@ -130,12 +141,10 @@ int	main(void)
 								&img.endian);
 	//test
 	draw_screen(&args, &set, &img);
-	zoom(0.9, &set);
-
 	//fin test
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 
 	mlx_hook(vars.win, 2, 1L<<0, close, &vars); //close windows
-	mlx_mouse_hook(vars.win, mouse_hook, &vars);
+	mlx_mouse_hook(vars.win, mouse_hook, &zoom_data);
 	mlx_loop(vars.mlx);
 }

@@ -27,4 +27,10 @@ typedef struct s_arg{
 	int high;
 	int width;
 } t_args;
+typedef struct s_zoom{
+	t_args *args;
+	t_set *set;
+	t_data *img;
+	t_vars *vars;
+} t_zoom;
 #endif

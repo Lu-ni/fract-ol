@@ -12,6 +12,9 @@ $(NAME): $(OBJ)
 %.o: %.c
 	$(CC) $(FLAGS) -Imlx -c $< -o $@
 
+r: all
+	./fract-ol
+
 clean:
 	rm -f $(OBJ)
 
