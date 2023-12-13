@@ -3,6 +3,8 @@
 #include "keys.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
 
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -76,26 +78,14 @@ void zoom(float zoom, t_set *set, int x, int y)
 
 	real = x_pixel(x, set->x_min, set->x_step);
 	irreal = y_pixel(y, set->y_max, set->y_step);
-
-
-	printf("old step: %f\n",set->y_step);
-	printf("old y_max: %f\n",set->y_max);
-	printf("old y_min: %f\n",set->y_min);
-	printf("old x_min: %f\n",set->x_min);
-	printf("old x_max: %f\n",set->x_max);
 	set->x_step = set->x_step * zoom;
 	set->y_step = set->y_step * zoom;
-	printf("mouse (%i, %i)\n",x,y);
 	set->y_max = irreal + y * set->y_step; 
 	set->y_min = irreal - (1000 - y) * set->y_step; 
 	set->x_min = real - x * set->x_step; 
 	set->x_max = real +  (1000 - x) * set->x_step; 
-	printf("new step: %f\n",set->y_step);
-	printf("new y_max: %f\n",set->y_max);
-	printf("new y_min: %f\n",set->y_min);
-	printf("new x_min: %f\n",set->x_min);
-	printf("new x_max: %f\n",set->x_max);
 }
+
 void draw_screen(t_args *args, t_set *set, t_data *img)
 {
 
@@ -104,6 +94,9 @@ void draw_screen(t_args *args, t_set *set, t_data *img)
 	double real;
 	double irreal;
 	unsigned char red;
+clock_t start, end;///////////
+double cpu_time_used;////////
+start = clock();///////////
 	while (i_y < args->high)
 	{
 		i_x = 0;
@@ -111,14 +104,17 @@ void draw_screen(t_args *args, t_set *set, t_data *img)
 		{
 			real = x_pixel(i_x, set->x_min, set->x_step);
 			irreal = y_pixel(i_y, set->y_max, set->x_step);
-			red = mandelbrotEscapeIterations(real, irreal, 255) & 0xFF;
+			red = mandelbrotEscapeIterations(real, irreal, 300) & 0xFF;
 			my_mlx_pixel_put(img, i_x, i_y, argb(0, (433 - red * 20)%255, (red * 20) % 255, (2455 - red * 20)%255));
-			//printf("(%f ; %f) - (%i ; %i)\n",real, irreal,i_x,i_y);
 			i_x++;
 		}
 		i_y++;
 	}
+end = clock();/////
+cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC; /////////////
+printf("Time used: %f seconds\n", cpu_time_used); /////////////
 }
+
 int	mouse_hook(int keycode,int x, int y, t_zoom *zoom_data)
 {
 	if (keycode == MOUSE_WHEEL_DOWN)
@@ -126,6 +122,14 @@ int	mouse_hook(int keycode,int x, int y, t_zoom *zoom_data)
 		zoom(0.9, zoom_data->set, x, y);
 		draw_screen(zoom_data->args, zoom_data->set, zoom_data->img);
 		mlx_put_image_to_window(zoom_data->vars->mlx, zoom_data->vars->win, zoom_data->img->img, 0, 0);
+
+	}
+	if (keycode == MOUSE_WHEEL_UP)
+	{
+		zoom(1.2, zoom_data->set, x, y);
+		draw_screen(zoom_data->args, zoom_data->set, zoom_data->img);
+		mlx_put_image_to_window(zoom_data->vars->mlx, zoom_data->vars->win, zoom_data->img->img, 0, 0);
+
 	}
 	return (0);
 }
@@ -161,7 +165,6 @@ int	main(void)
 	draw_screen(&args, &set, &img);
 	//fin test
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
-
 	mlx_hook(vars.win, 2, 1L<<0, close, &vars); //close windows
 	mlx_mouse_hook(vars.win, mouse_hook, &zoom_data);
 	mlx_loop(vars.mlx);
