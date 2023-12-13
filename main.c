@@ -69,14 +69,32 @@ double y_pixel(int y, double y_max, double y_step)
 {
 	return ( y_max - y * y_step);
 }
-void zoom(float zoom, t_set *set)
+void zoom(float zoom, t_set *set, int x, int y)
 {
-	set->y_max = set->y_max * zoom; 
-	set->y_min = set->y_min * zoom; 
-	set->x_max = set->x_max * zoom; 
-	set->x_min = set->x_min * zoom; 
+	double real;
+	double irreal;
+
+	real = x_pixel(x, set->x_min, set->x_step);
+	irreal = y_pixel(y, set->y_max, set->y_step);
+
+
+	printf("old step: %f\n",set->y_step);
+	printf("old y_max: %f\n",set->y_max);
+	printf("old y_min: %f\n",set->y_min);
+	printf("old x_min: %f\n",set->x_min);
+	printf("old x_max: %f\n",set->x_max);
 	set->x_step = set->x_step * zoom;
 	set->y_step = set->y_step * zoom;
+	printf("mouse (%i, %i)\n",x,y);
+	set->y_max = irreal + y * set->y_step; 
+	set->y_min = irreal - (1000 - y) * set->y_step; 
+	set->x_min = real - x * set->x_step; 
+	set->x_max = real +  (1000 - x) * set->x_step; 
+	printf("new step: %f\n",set->y_step);
+	printf("new y_max: %f\n",set->y_max);
+	printf("new y_min: %f\n",set->y_min);
+	printf("new x_min: %f\n",set->x_min);
+	printf("new x_max: %f\n",set->x_max);
 }
 void draw_screen(t_args *args, t_set *set, t_data *img)
 {
@@ -105,7 +123,7 @@ int	mouse_hook(int keycode,int x, int y, t_zoom *zoom_data)
 {
 	if (keycode == MOUSE_WHEEL_DOWN)
 	{
-		zoom(0.9, zoom_data->set);
+		zoom(0.9, zoom_data->set, x, y);
 		draw_screen(zoom_data->args, zoom_data->set, zoom_data->img);
 		mlx_put_image_to_window(zoom_data->vars->mlx, zoom_data->vars->win, zoom_data->img->img, 0, 0);
 	}
