@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 	draw_screen(&all);
 	// fin test
 	mlx_put_image_to_window(all.vars.mlx, all.vars.win, all.img.img, 0, 0);
-	mlx_hook(all.vars.win, 2, 1L << 0, key_hook, &all); // close windows
+	mlx_hook(all.vars.win, 2, 1L << 0, key_hook, &all);
 	mlx_mouse_hook(all.vars.win, mouse_hook, &all);
 	mlx_loop(all.vars.mlx);
 }

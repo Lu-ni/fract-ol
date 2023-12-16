@@ -1,4 +1,5 @@
 #include "fractol.h"
+#include <stdio.h>
 
 int mandelbrotEscapeIterations(double real, double imag, int maxIter)
 {
@@ -7,6 +8,7 @@ int mandelbrotEscapeIterations(double real, double imag, int maxIter)
 	unsigned int iter = 0;
 	double       zRealNew;
 	double       zImagNew;
+
 	while (iter < maxIter)
 	{
 		zRealNew = zReal * zReal - zImag * zImag + real;
@@ -20,7 +22,6 @@ int mandelbrotEscapeIterations(double real, double imag, int maxIter)
 		}
 		iter++;
 	}
-
 	return iter;
 }
 
@@ -30,13 +31,35 @@ int julia(float x, float y, float cX, float cY)
 	float zx = x;
 	float zy = y;
 
-	while (zx * zx + zy * zy <= 4.0 && iter < 200)
+	while (zx * zx + zy * zy <= 4.0 && iter < 255)
 	{
 		float xt = zx * zx - zy * zy + cX;
 		zy = 2.0 * zx * zy + cY;
 		zx = xt;
 		iter++;
 	}
-
 	return iter;
+}
+
+void calculate_set(t_all *all)
+{
+	int           i_y = 0;
+	int           i_x = 0;
+	double        real;
+	double        irreal;
+	unsigned char red;
+	while (i_y < all->args.high)
+	{
+		i_x = 0;
+		while (i_x < all->args.width)
+		{
+			real = x_pixel(i_x, all->set.x_min, all->set.x_step);
+			irreal = y_pixel(i_y, all->set.y_max, all->set.x_step);
+			all->pixels[i_x][i_y] = mandelbrotEscapeIterations(real, irreal, 255) & 0xFF;
+			// all->pixels[i_x][i_y] = julia(real, irreal, -0.4, 0.6);
+			i_x++;
+		}
+		i_y++;
+	}
+	i_y = 0;
 }

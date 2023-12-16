@@ -1,6 +1,7 @@
 #ifndef FRACTOL_H
 #define FRACTOL_H
 
+#define MAX_PIXELS 2000
 typedef struct s_vars
 {
 	void *mlx;
@@ -31,22 +32,29 @@ typedef struct s_arg
 	int high;
 	int width;
 } t_args;
+typedef struct s_colors
+{
+	int split[15];
+} t_colors;
 typedef struct s_all
 {
-	t_args args;
-	t_set  set;
-	t_data img;
-	t_vars vars;
+	t_args   args;
+	t_set    set;
+	t_data   img;
+	t_vars   vars;
+	int      pixels[MAX_PIXELS][MAX_PIXELS];
+	t_colors colors;
 } t_all;
+
 // pixel.c
 void   my_mlx_pixel_put(t_data *data, int x, int y, int color);
 double x_pixel(int x, double x_min, double x_step);
 double y_pixel(int y, double y_max, double y_step);
 // set.c
-int mandelbrotEscapeIterations(double real, double imag, int maxIter);
-int julia(float x, float y, float cX, float cY);
+void calculate_set(t_all *all);
 // colors.c
-int argb(unsigned char a, unsigned char b, unsigned char c, unsigned char d);
+int  argb(unsigned char a, unsigned char b, unsigned char c, unsigned char d);
+void create_color_set(t_all *all);
 // windows_utils.c
 void zoom(float zoom, t_all *all, int x, int y);
 void draw_screen(t_all *all);

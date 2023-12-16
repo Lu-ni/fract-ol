@@ -51,39 +51,40 @@ void translation(float coef, t_all *all, int key)
 
 void draw_screen(t_all *all)
 {
-	int           i_y = 0;
-	int           i_x = 0;
-	double        real;
-	double        irreal;
-	unsigned char red;
-	clock_t       start, end;    ///////////
-	double        cpu_time_used; ////////
-	start = clock();             ///////////
+	int i_y = 0;
+	int i_x = 0;
+
+	i_y = 0;
+	calculate_set(all);
+	create_color_set(all);
 	while (i_y < all->args.high)
 	{
 		i_x = 0;
 		while (i_x < all->args.width)
 		{
-			real = x_pixel(i_x, all->set.x_min, all->set.x_step);
-			irreal = y_pixel(i_y, all->set.y_max, all->set.x_step);
-			red = mandelbrotEscapeIterations(real, irreal, 150) & 0xFF;
-			// red = julia(i_x, i_y, -0.4, 0.6);
-			if (red < 5)
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 224, 225, 221));
-			else if (red < 20)
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 119, 141, 169));
-			else if (red < 50)
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 65, 90, 119));
-			else if (red < 100)
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 27, 38, 59));
+			// my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 255, 200, all->pixels[i_x][i_y]));
+			if (all->pixels[i_x][i_y] < all->colors.split[0])
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 50, 20));
+			else if (all->pixels[i_x][i_y] < all->colors.split[1])
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 50, 40));
+			else if (all->pixels[i_x][i_y] < all->colors.split[2])
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 50, 60));
+			else if (all->pixels[i_x][i_y] < all->colors.split[3])
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 100, 80));
+			else if (all->pixels[i_x][i_y] < all->colors.split[4])
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 100, 100));
+			else if (all->pixels[i_x][i_y] < all->colors.split[5])
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 100, 120));
+			else if (all->pixels[i_x][i_y] < all->colors.split[6])
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 150, 140));
+			else if (all->pixels[i_x][i_y] < all->colors.split[7])
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 150, 160));
+			else if (all->pixels[i_x][i_y] < all->colors.split[8])
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 150, 180));
 			else
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 13, 27, 42));
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 200, 200));
 			i_x++;
 		}
 		i_y++;
 	}
-
-	end = clock();                                             /////
-	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC; /////////////
-	printf("Time used: %f seconds\n", cpu_time_used);          /////////////
 }
