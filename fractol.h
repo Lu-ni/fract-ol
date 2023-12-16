@@ -38,4 +38,18 @@ typedef struct s_all
 	t_data img;
 	t_vars vars;
 } t_all;
+// pixel.c
+void   my_mlx_pixel_put(t_data *data, int x, int y, int color);
+double x_pixel(int x, double x_min, double x_step);
+double y_pixel(int y, double y_max, double y_step);
+// set.c
+int mandelbrotEscapeIterations(double real, double imag, int maxIter);
+// colors.c
+int argb(unsigned char a, unsigned char b, unsigned char c, unsigned char d);
+// windows_utils.c
+void zoom(float zoom, t_all *all, int x, int y);
+void draw_screen(t_all *all);
+int  close(int keycode, t_vars *vars);
+// hook.c
+int mouse_hook(int keycode, int x, int y, t_all *all);
 #endif
