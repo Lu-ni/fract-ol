@@ -23,3 +23,20 @@ int mandelbrotEscapeIterations(double real, double imag, int maxIter)
 
 	return iter;
 }
+
+int julia(float x, float y, float cX, float cY)
+{
+	int   iter = 0;
+	float zx = x;
+	float zy = y;
+
+	while (zx * zx + zy * zy <= 4.0 && iter < 200)
+	{
+		float xt = zx * zx - zy * zy + cX;
+		zy = 2.0 * zx * zy + cY;
+		zx = xt;
+		iter++;
+	}
+
+	return iter;
+}

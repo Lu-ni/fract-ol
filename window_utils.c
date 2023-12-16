@@ -5,19 +5,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-int close(int keycode, t_vars *vars)
-{
-	if (keycode == KEY_ESC)
-	{
-		mlx_destroy_window(vars->mlx, vars->win);
-		exit(EXIT_SUCCESS);
-	}
-	else
-	{
-		printf("%p\n", vars);
-	}
-	return (0);
-}
 void zoom(float zoom, t_all *all, int x, int y)
 {
 	double real;
@@ -28,9 +15,38 @@ void zoom(float zoom, t_all *all, int x, int y)
 	all->set.x_step = all->set.x_step * zoom;
 	all->set.y_step = all->set.y_step * zoom;
 	all->set.y_max = irreal + y * all->set.y_step;
-	all->set.y_min = irreal - (1000 - y) * all->set.y_step; // change 1000 for high
+	all->set.y_min = irreal - (all->args.high - y) * all->set.y_step;
 	all->set.x_min = real - x * all->set.x_step;
-	all->set.x_max = real + (1000 - x) * all->set.x_step; // change 1000 for width
+	all->set.x_max = real + (all->args.width - x) * all->set.x_step;
+}
+
+void translation(float coef, t_all *all, int key)
+{
+	float delta_y;
+	float delta_x;
+
+	delta_y = all->set.y_max - all->set.y_min;
+	delta_x = all->set.x_max - all->set.x_min;
+	if (key == UP)
+	{
+		all->set.y_max += delta_y * coef;
+		all->set.y_min += delta_y * coef;
+	}
+	if (key == DOWN)
+	{
+		all->set.y_max -= delta_y * coef;
+		all->set.y_min -= delta_y * coef;
+	}
+	if (key == RIGTH)
+	{
+		all->set.x_max += delta_x * coef;
+		all->set.x_min += delta_x * coef;
+	}
+	if (key == LEFT)
+	{
+		all->set.x_max -= delta_x * coef;
+		all->set.x_min -= delta_x * coef;
+	}
 }
 
 void draw_screen(t_all *all)
@@ -51,6 +67,7 @@ void draw_screen(t_all *all)
 			real = x_pixel(i_x, all->set.x_min, all->set.x_step);
 			irreal = y_pixel(i_y, all->set.y_max, all->set.x_step);
 			red = mandelbrotEscapeIterations(real, irreal, 150) & 0xFF;
+			// red = julia(i_x, i_y, -0.4, 0.6);
 			if (red < 5)
 				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 224, 225, 221));
 			else if (red < 20)

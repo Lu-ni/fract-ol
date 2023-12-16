@@ -1,7 +1,8 @@
 NAME = fract-ol
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRC = main.c # Add other .c files here
+SRC = main.c colors.c hook.c pixel.c set.c window_utils.c
+
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
