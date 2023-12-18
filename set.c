@@ -55,8 +55,8 @@ void calculate_set(t_all *all)
 		{
 			real = x_pixel(i_x, all->set.x_min, all->set.x_step);
 			irreal = y_pixel(i_y, all->set.y_max, all->set.x_step);
-			all->pixels[i_x][i_y] = mandelbrotEscapeIterations(real, irreal, 255) & 0xFF;
-			// all->pixels[i_x][i_y] = julia(real, irreal, -0.4, 0.6);
+			// all->pixels[i_x][i_y] = mandelbrotEscapeIterations(real, irreal, 255) & 0xFF;
+			all->pixels[i_x][i_y] = julia(real, irreal, -0.4, 0.6);
 			i_x++;
 		}
 		i_y++;

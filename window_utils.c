@@ -55,7 +55,6 @@ void draw_screen(t_all *all)
 	int i_x = 0;
 
 	i_y = 0;
-	calculate_set(all);
 	// create_color_set(all);
 	while (i_y < all->args.high)
 	{
@@ -63,7 +62,8 @@ void draw_screen(t_all *all)
 		while (i_x < all->args.width)
 		{
 			int val = all->pixels[i_x][i_y];
-			my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, val, val * val * val * val % 255, 255 - val));
+			my_mlx_pixel_put(&all->img, i_x, i_y,
+			                 argb(0, (val * val + all->colors.i) & 0xff, (val * val) & 0xFF, (255 - val) & 0xFF));
 			i_x++;
 		}
 		i_y++;

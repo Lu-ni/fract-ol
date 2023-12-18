@@ -9,13 +9,17 @@ int mouse_hook(int keycode, int x, int y, t_all *all)
 {
 	if (keycode == MOUSE_WHEEL_DOWN)
 	{
+		all->colors.i = (all->colors.i + MAGIC_NUM) % 255;
 		zoom(0.9, all, x, y);
+		calculate_set(all);
 		draw_screen(all);
 		mlx_put_image_to_window(all->vars.mlx, all->vars.win, all->img.img, 0, 0);
 	}
 	if (keycode == MOUSE_WHEEL_UP)
 	{
+		all->colors.i = (all->colors.i + MAGIC_NUM) % 255;
 		zoom(1.2, all, x, y);
+		calculate_set(all);
 		draw_screen(all);
 		mlx_put_image_to_window(all->vars.mlx, all->vars.win, all->img.img, 0, 0);
 	}
@@ -31,6 +35,13 @@ int key_hook(int keycode, t_all *all)
 	else if (123 <= keycode && keycode <= 126)
 	{
 		translation(0.05, all, keycode);
+		calculate_set(all);
+		draw_screen(all);
+		mlx_put_image_to_window(all->vars.mlx, all->vars.win, all->img.img, 0, 0);
+	}
+	else if (keycode == 49)
+	{
+		all->colors.i = (all->colors.i + 10) % 255;
 		draw_screen(all);
 		mlx_put_image_to_window(all->vars.mlx, all->vars.win, all->img.img, 0, 0);
 	}

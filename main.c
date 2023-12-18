@@ -3,12 +3,18 @@
 #include "mlx/mlx.h"
 #include <stdio.h>
 
-void test()
+int test(t_all *all)
 {
-	printf("lll\n");
+	if (full_psy(all))
+	{
+		draw_screen(all);
+		mlx_put_image_to_window(all->vars.mlx, all->vars.win, all->img.img, 0, 0);
+	}
+	return (0);
 }
 void init(t_all *all, int argc, char **argv)
 {
+	all->colors.magic = MAGIC_NUM;
 	all->args.high = 500;
 	all->args.width = 500;
 	all->set.y_max = 2.0;
@@ -31,10 +37,12 @@ int main(int argc, char **argv)
 
 	init(&all, argc, argv);
 	// test
+	calculate_set(&all);
 	draw_screen(&all);
 	// fin test
 	mlx_put_image_to_window(all.vars.mlx, all.vars.win, all.img.img, 0, 0);
 	mlx_hook(all.vars.win, 2, 1L << 0, key_hook, &all);
 	mlx_mouse_hook(all.vars.win, mouse_hook, &all);
+	mlx_loop_hook(all.vars.mlx, test, &all);
 	mlx_loop(all.vars.mlx);
 }

@@ -62,3 +62,20 @@ void create_color_set(t_all *all)
 		i++;
 	}
 }
+int full_psy(t_all *all)
+{
+	if ((all->colors.ii / 900))
+	{
+		all->colors.i = (all->colors.i + all->colors.magic);
+		if (!(0 < all->colors.i && all->colors.i < 255))
+		{
+			all->colors.magic *= -1;
+			all->colors.i = (all->colors.i + all->colors.magic);
+		}
+		all->colors.ii = 0;
+		return (1);
+	}
+	else
+		all->colors.ii++;
+	return (0);
+}

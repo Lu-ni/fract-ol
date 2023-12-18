@@ -2,6 +2,7 @@
 #define FRACTOL_H
 
 #define MAX_PIXELS 2000
+#define MAGIC_NUM 5
 typedef struct s_vars
 {
 	void *mlx;
@@ -34,8 +35,10 @@ typedef struct s_arg
 } t_args;
 typedef struct s_colors
 {
-	int      split[15];
-	unsigned i;
+	int          split[15];
+	unsigned int i;
+	unsigned int ii;
+	int          magic;
 } t_colors;
 typedef struct s_all
 {
@@ -56,6 +59,7 @@ void calculate_set(t_all *all);
 // colors.c
 int  argb(unsigned char a, unsigned char b, unsigned char c, unsigned char d);
 void create_color_set(t_all *all);
+int  full_psy(t_all *all);
 // windows_utils.c
 void zoom(float zoom, t_all *all, int x, int y);
 void draw_screen(t_all *all);
