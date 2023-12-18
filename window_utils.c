@@ -62,8 +62,14 @@ void draw_screen(t_all *all)
 		while (i_x < all->args.width)
 		{
 			int val = all->pixels[i_x][i_y];
-			my_mlx_pixel_put(&all->img, i_x, i_y,
-			                 argb(0, (val * val + all->colors.i) & 0xff, (val * val) & 0xFF, (255 - val) & 0xFF));
+			//	my_mlx_pixel_put(&all->img, i_x, i_y,
+			//	                 argb(0, (val * val + all->colors.i) & 0xff, (val * val) & 0xFF, (255 - val) & 0xFF));
+			if (val == 255)
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 0, 0, 0));
+			else if (val < 50)
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, val * 5, 0, 0));
+			else
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, val, 0, 0));
 			i_x++;
 		}
 		i_y++;
