@@ -56,33 +56,14 @@ void draw_screen(t_all *all)
 
 	i_y = 0;
 	calculate_set(all);
-	create_color_set(all);
+	// create_color_set(all);
 	while (i_y < all->args.high)
 	{
 		i_x = 0;
 		while (i_x < all->args.width)
 		{
-			// my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 255, 200, all->pixels[i_x][i_y]));
-			if (all->pixels[i_x][i_y] < all->colors.split[0])
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 50, 20));
-			else if (all->pixels[i_x][i_y] < all->colors.split[1])
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 50, 40));
-			else if (all->pixels[i_x][i_y] < all->colors.split[2])
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 50, 60));
-			else if (all->pixels[i_x][i_y] < all->colors.split[3])
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 100, 80));
-			else if (all->pixels[i_x][i_y] < all->colors.split[4])
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 100, 100));
-			else if (all->pixels[i_x][i_y] < all->colors.split[5])
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 100, 120));
-			else if (all->pixels[i_x][i_y] < all->colors.split[6])
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 150, 140));
-			else if (all->pixels[i_x][i_y] < all->colors.split[7])
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 150, 160));
-			else if (all->pixels[i_x][i_y] < all->colors.split[8])
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 150, 180));
-			else
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 40, 200, 200));
+			int val = all->pixels[i_x][i_y];
+			my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, val, val * val * val * val % 255, 255 - val));
 			i_x++;
 		}
 		i_y++;

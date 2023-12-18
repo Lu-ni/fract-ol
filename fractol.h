@@ -34,7 +34,8 @@ typedef struct s_arg
 } t_args;
 typedef struct s_colors
 {
-	int split[15];
+	int      split[15];
+	unsigned i;
 } t_colors;
 typedef struct s_all
 {

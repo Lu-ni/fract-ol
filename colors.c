@@ -40,12 +40,22 @@ void create_color_set(t_all *all)
 	printf("///////\n");
 	while (i < 256)
 	{
+		if (tab[i] > all->args.high * all->args.width / div)
+		{
+			total -= tab[i];
+			div--;
+		}
+		i++;
+	}
+	i = 0;
+	while (i < 256)
+	{
 		count += tab[i];
-		if (count > total / div)
+		if (count > total / 10)
 		{
 			all->colors.split[10 - div] = i;
-			printf("set limit:%i\n", i);
-			total -= count;
+			printf("set limit:%i:%f\n", i,
+			       100 * (double) count / (all->args.high * all->args.width));
 			count = 0;
 			div--;
 		}
