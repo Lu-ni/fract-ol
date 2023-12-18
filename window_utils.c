@@ -65,11 +65,15 @@ void draw_screen(t_all *all)
 			//	my_mlx_pixel_put(&all->img, i_x, i_y,
 			//	                 argb(0, (val * val + all->colors.i) & 0xff, (val * val) & 0xFF, (255 - val) & 0xFF));
 			if (val == 255)
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 0, 0, 0));
-			else if (val < 50)
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, val * 5, 0, 0));
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, 0, 0, 40));
+			else if (val <= 51)
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, val * 5, 0, 40));
+			else if (val <= 102)
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, (val - 51) * 5, 0, 40));
+			else if (val <= 153)
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, (val - 102) * 5, 0, 40));
 			else
-				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, val, 0, 0));
+				my_mlx_pixel_put(&all->img, i_x, i_y, argb(0, val, 0, 40));
 			i_x++;
 		}
 		i_y++;
