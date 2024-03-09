@@ -1,7 +1,7 @@
 #ifndef FRACTOL_H
 #define FRACTOL_H
 
-#define MAX_PIXELS 2000
+#define MAX_PIXELS 800
 #define MAGIC_NUM 5
 typedef struct s_vars
 {
