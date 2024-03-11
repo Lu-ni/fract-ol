@@ -1,7 +1,7 @@
 #ifndef FRACTOL_H
 #define FRACTOL_H
 
-#define MAX_PIXELS 2000
+#define MAX_PIXELS 500
 #define MAGIC_NUM 5
 typedef struct s_vars
 {
@@ -39,6 +39,7 @@ typedef struct s_colors
 	unsigned int i;
 	unsigned int ii;
 	int          magic;
+	int 		acid;
 } t_colors;
 typedef struct s_all
 {
