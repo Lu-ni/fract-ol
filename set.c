@@ -39,6 +39,22 @@ int julia(float x, float y, float cX, float cY)
 	}
 	return iter;
 }
+int tricorn(double real, double irreal, int max_iterations)
+{
+    double z_real = real;
+    double z_irreal = irreal;
+    int iter = 0;
+
+    while (z_real * z_real + z_irreal * z_irreal <= 4.0 && iter < max_iterations)
+    {
+        double temp = z_real * z_real - z_irreal * z_irreal + real;
+        z_irreal = -2.0 * z_real * z_irreal + irreal;
+        z_real = temp;
+        iter++;
+    }
+
+    return iter;
+}
 
 void calculate_set(t_all *all)
 {
@@ -58,6 +74,8 @@ void calculate_set(t_all *all)
 				all->pixels[i_x][i_y] = mandelbrotEscapeIterations(real, irreal, 255) & 0xFF;
 			if(all->set_choice == JULIA_SET)
 				all->pixels[i_x][i_y] = julia(real, irreal, -0.4, 0.6);
+			if(all->set_choice == TRICORN_SET)
+				all->pixels[i_x][i_y] = tricorn(real, irreal, 255);
 			i_x++;
 		}
 		i_y++;

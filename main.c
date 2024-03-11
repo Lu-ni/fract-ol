@@ -27,6 +27,8 @@ int parser(t_all *all, int argc, char **argv)
 		all->set_choice = JULIA_SET;
 	else if (argv[1][0] == 'm' && argv[1][1] == '\0')
 		all->set_choice = MANDELBROT_SET;
+	else if (argv[1][0] == 't' && argv[1][1] == '\0')
+		all->set_choice = TRICORN_SET;
 	else
 		print_help();
 	return (0);

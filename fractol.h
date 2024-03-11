@@ -5,7 +5,7 @@
 #define MAGIC_NUM 5
 #define JULIA_SET 1
 #define MANDELBROT_SET 2
-#define SET_3 3
+#define TRICORN_SET 3
 typedef struct s_vars
 {
 	void *mlx;
