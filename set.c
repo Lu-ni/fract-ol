@@ -73,7 +73,7 @@ void calculate_set(t_all *all)
 			if(all->set_choice == MANDELBROT_SET)
 				all->pixels[i_x][i_y] = mandelbrotEscapeIterations(real, irreal, 255) & 0xFF;
 			if(all->set_choice == JULIA_SET)
-				all->pixels[i_x][i_y] = julia(real, irreal, -0.4, 0.6);
+				all->pixels[i_x][i_y] = julia(real, irreal, all->set.cX, all->set.cY);
 			if(all->set_choice == TRICORN_SET)
 				all->pixels[i_x][i_y] = tricorn(real, irreal, 255);
 			i_x++;

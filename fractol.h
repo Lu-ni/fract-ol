@@ -20,6 +20,8 @@ typedef struct s_set
 	double x_min;
 	double y_step;
 	double x_step;
+	float cX;
+	float cY;
 } t_set;
 
 typedef struct s_data
