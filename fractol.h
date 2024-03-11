@@ -3,6 +3,9 @@
 
 #define MAX_PIXELS 500
 #define MAGIC_NUM 5
+#define JULIA_SET 1
+#define MANDELBROT_SET 2
+#define SET_3 3
 typedef struct s_vars
 {
 	void *mlx;
@@ -49,6 +52,7 @@ typedef struct s_all
 	t_vars   vars;
 	int      pixels[MAX_PIXELS][MAX_PIXELS];
 	t_colors colors;
+	int set_choice;
 } t_all;
 
 // pixel.c
@@ -68,4 +72,6 @@ void translation(float coef, t_all *all, int key);
 // hook.c
 int key_hook(int keycode, t_all *all);
 int mouse_hook(int keycode, int x, int y, t_all *all);
+// init
+void init_all(t_all *all, int argc, char **argv);
 #endif

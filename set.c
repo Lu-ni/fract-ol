@@ -15,7 +15,6 @@ int mandelbrotEscapeIterations(double real, double imag, int maxIter)
 		zImagNew = 2 * zReal * zImag + imag;
 		zReal = zRealNew;
 		zImag = zImagNew;
-		// Check if the magnitude of the complex number exceeds 2 (escape radius)
 		if ((zReal * zReal + zImag * zImag) > 4)
 		{
 			break;
@@ -55,8 +54,10 @@ void calculate_set(t_all *all)
 		{
 			real = x_pixel(i_x, all->set.x_min, all->set.x_step);
 			irreal = y_pixel(i_y, all->set.y_max, all->set.x_step);
-			//all->pixels[i_x][i_y] = mandelbrotEscapeIterations(real, irreal, 255) & 0xFF;
-			all->pixels[i_x][i_y] = julia(real, irreal, -0.4, 0.6);
+			if(all->set_choice == MANDELBROT_SET)
+				all->pixels[i_x][i_y] = mandelbrotEscapeIterations(real, irreal, 255) & 0xFF;
+			if(all->set_choice == JULIA_SET)
+				all->pixels[i_x][i_y] = julia(real, irreal, -0.4, 0.6);
 			i_x++;
 		}
 		i_y++;

@@ -1,7 +1,7 @@
 NAME = fract-ol
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRC = main.c colors.c hook.c pixel.c set.c window_utils.c
+SRC = main.c colors.c hook.c pixel.c set.c window_utils.c init.c
 
 OBJ = $(SRC:.c=.o)
 
