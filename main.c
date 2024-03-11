@@ -23,15 +23,15 @@ int parser(t_all *all, int argc, char **argv)
 {
 	if(argc < 2)
 		print_help();
-	else if (argv[1][0] == 'j' && argv[1][1] == '\0' && argc == 4) //protect against no args
+	else if (argv[1][0] == 'j' && argv[1][1] == '\0' && argc == 4)
 	{
 		all->set_choice = JULIA_SET;
 		all->set.cX = atof(argv[2]);
 		all->set.cY = atof(argv[3]);
 	}
-	else if (argv[1][0] == 'm' && argv[1][1] == '\0')
+	else if (argv[1][0] == 'm' && argv[1][1] == '\0' && argc == 2)
 		all->set_choice = MANDELBROT_SET;
-	else if (argv[1][0] == 't' && argv[1][1] == '\0')
+	else if (argv[1][0] == 't' && argv[1][1] == '\0' && argc == 2)
 		all->set_choice = TRICORN_SET;
 	else
 		print_help();
