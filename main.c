@@ -38,7 +38,7 @@ int psy(t_all *all)
 }
 void print_help(void)
 {
-	write(1, "test\n",5);
+	write(1, "Welcom to fract-ol\nYou must at least provide the set you want after the program name (m,j,t).\nFor j, you also need to specify two number that are going to be use for the math :)\n",179);
 	exit(EXIT_SUCCESS);
 }
 int parser(t_all *all, int argc, char **argv)
