@@ -1,5 +1,4 @@
 #include "fractol.h"
-#include <stdio.h>
 
 int mandelbrotEscapeIterations(double real, double imag, int maxIter)
 {

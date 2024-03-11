@@ -3,7 +3,6 @@
 #include "mlx/mlx.h"
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdio.h>
 float ft_atof(const char *str)
 {
     float result = 0.0f;
@@ -71,10 +70,8 @@ int main(int argc, char **argv)
 	t_all all;
 
 	init(&all, argc, argv);
-	// test
 	calculate_set(&all);
 	draw_screen(&all);
-	// fin test
 	mlx_put_image_to_window(all.vars.mlx, all.vars.win, all.img.img, 0, 0);
 	mlx_hook(all.vars.win, 2, 1L << 0, key_hook, &all);
 	mlx_mouse_hook(all.vars.win, mouse_hook, &all);
