@@ -15,6 +15,7 @@ int test(t_all *all)
 void init(t_all *all, int argc, char **argv)
 {
 	all->colors.magic = MAGIC_NUM;
+	all->colors.acid = 0;
 	all->args.high = 500;
 	all->args.width = 500;
 	all->set.y_max = 2.0;

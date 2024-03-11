@@ -23,6 +23,14 @@ int mouse_hook(int keycode, int x, int y, t_all *all)
 		draw_screen(all);
 		mlx_put_image_to_window(all->vars.mlx, all->vars.win, all->img.img, 0, 0);
 	}
+	if (keycode == MOUSE_BTN && x< 50 && y <50)
+	{
+		if(all->colors.acid == 0)
+			all->colors.acid = 1;
+		else
+			all->colors.acid = 0;
+
+	}
 	return (0);
 }
 int key_hook(int keycode, t_all *all)
