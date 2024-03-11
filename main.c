@@ -4,7 +4,30 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+float ft_atof(const char *str)
+{
+    float result = 0.0f;
+    float sign = 1.0f;
+    float scale = 1.0f;
 
+    if (*str == '-') {
+        sign = -1.0f;
+        str++;
+    }
+    while (*str >= '0' && *str <= '9') {
+        result = (result * 10.0f) + (*str - '0');
+        str++;
+    }
+    if (*str == '.') {
+        str++;
+        while (*str >= '0' && *str <= '9') {
+            result = (result * 10.0f) + (*str - '0');
+            scale *= 10.0f;
+            str++;
+        }
+    }
+    return sign * result / scale;
+}
 int psy(t_all *all)
 {
 	if (full_psy(all))
@@ -26,8 +49,8 @@ int parser(t_all *all, int argc, char **argv)
 	else if (argv[1][0] == 'j' && argv[1][1] == '\0' && argc == 4)
 	{
 		all->set_choice = JULIA_SET;
-		all->set.cX = atof(argv[2]);
-		all->set.cY = atof(argv[3]);
+		all->set.cX = ft_atof(argv[2]);
+		all->set.cY = ft_atof(argv[3]);
 	}
 	else if (argv[1][0] == 'm' && argv[1][1] == '\0' && argc == 2)
 		all->set_choice = MANDELBROT_SET;
