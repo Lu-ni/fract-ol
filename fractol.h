@@ -1,11 +1,11 @@
 #ifndef FRACTOL_H
 #define FRACTOL_H
 
-#define MAX_PIXELS 500
 #define MAGIC_NUM 5
 #define JULIA_SET 1
 #define MANDELBROT_SET 2
 #define TRICORN_SET 3
+
 typedef struct s_vars
 {
 	void *mlx;
@@ -52,7 +52,7 @@ typedef struct s_all
 	t_set    set;
 	t_data   img;
 	t_vars   vars;
-	int      pixels[MAX_PIXELS][MAX_PIXELS];
+	int      **pixels;
 	t_colors colors;
 	int set_choice;
 } t_all;

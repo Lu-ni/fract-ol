@@ -1,14 +1,45 @@
 #include "fractol.h"
 #include "keys.h"
 #include "mlx/mlx.h"
-#include <stdio.h>
+#include <stdlib.h>
+
+
+
+int **twod_image(t_all *all) {
+    int i;
+    int **image;
+	int j;
+
+    image = (int **)malloc(all->args.high * sizeof(int *));
+    if (image == NULL) {
+        return NULL;
+    }
+
+    i = 0;
+    while (i < all->args.high) {
+        image[i] = (int *)malloc(all->args.width * sizeof(int));
+        if (image[i] == NULL) {
+            j = 0;
+            while (j < i) {
+                free(image[j]);
+                j++;
+            }
+            free(image);
+            return NULL;
+        }
+        i++;
+    }
+
+    return image;
+}
 
 void init_all(t_all *all, int argc, char **argv)
 {
 	all->colors.magic = MAGIC_NUM;
 	all->colors.acid = 0;
-	all->args.high = 500;
-	all->args.width = 500;
+	all->args.high = 1000;
+	all->args.width = 1000;
+	all->pixels = twod_image(all);
 	all->set.y_max = 2.0;
 	all->set.y_min = -2.0;
 	all->set.x_max = 2.0;

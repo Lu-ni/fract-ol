@@ -71,7 +71,6 @@ int main(int argc, char **argv)
 
 	init(&all, argc, argv);
 	calculate_set(&all);
-	draw_screen(&all);
 	mlx_put_image_to_window(all.vars.mlx, all.vars.win, all.img.img, 0, 0);
 	mlx_hook(all.vars.win, 2, 1L << 0, key_hook, &all);
 	mlx_hook(all.vars.win, 17, 0, close_window, &all);
