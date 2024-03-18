@@ -38,7 +38,7 @@ int key_hook(int keycode, t_all *all)
 	if (keycode == KEY_ESC)
 	{
 		mlx_destroy_window(all->vars.mlx, all->vars.win);
-		exit(EXIT_SUCCESS);
+		close_window(all);
 	}
 	else if (123 <= keycode && keycode <= 126)
 	{

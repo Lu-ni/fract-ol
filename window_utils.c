@@ -5,6 +5,13 @@
 #include <stdlib.h>
 #include <time.h>
 
+int close_window(void *param) {
+	t_all *all;
+	all = (t_all *) param;
+    // Clean up resources and exit
+    exit(0);
+}
+
 void zoom(float zoom, t_all *all, int x, int y)
 {
 	double real;

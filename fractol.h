@@ -71,6 +71,7 @@ int  full_psy(t_all *all);
 void zoom(float zoom, t_all *all, int x, int y);
 void draw_screen(t_all *all);
 void translation(float coef, t_all *all, int key);
+int close_window(void *param);
 // hook.c
 int key_hook(int keycode, t_all *all);
 int mouse_hook(int keycode, int x, int y, t_all *all);
